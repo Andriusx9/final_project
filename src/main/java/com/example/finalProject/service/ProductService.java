@@ -2,6 +2,7 @@ package com.example.finalProject.service;
 
 import com.example.finalProject.exception.ProductNotFoundException;
 import com.example.finalProject.model.Product;
+import com.example.finalProject.model.Supplier;
 import com.example.finalProject.repository.ProductRepository;
 import com.example.finalProject.repository.SupplierRepository;
 import org.slf4j.Logger;
@@ -52,6 +53,11 @@ public class ProductService {
     }
 
     public Product updateProduct(final Product newProduct, Integer id) {
+        for (Supplier supplier : supplierRepository.findAll()) {
+            if(supplier.getName().equalsIgnoreCase(newProduct.getSupplier().getName())){
+                newProduct.setSupplier(supplier);
+            }
+        }
         return productRepository.findById(id)
                 .map(product -> {
                     LOGGER.info("Updating product where ID = " + id);
@@ -61,6 +67,7 @@ public class ProductService {
                     product.setUniqueCode(newProduct.getUniqueCode());
                     product.setMeasureUnit(newProduct.getMeasureUnit());
                     product.setQuantity(newProduct.getQuantity());
+                    product.setSupplier(newProduct.getSupplier());
                     return productRepository.save(product);
                 })
                 .orElseGet(() -> {

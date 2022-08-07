@@ -5,7 +5,6 @@ import com.example.finalProject.exception.InvoiceNotFoundException;
 import com.example.finalProject.model.Client;
 import com.example.finalProject.model.Invoice;
 import com.example.finalProject.repository.InvoiceRepository;
-
 import com.example.finalProject.repository.ProductRepository;
 import com.example.finalProject.service.*;
 import lombok.AllArgsConstructor;
@@ -28,11 +27,8 @@ public class InvoiceController {
     private static Logger LOGGER = LoggerFactory.getLogger(InvoiceController.class);
 
     private final InvoiceRepository invoiceRepository;
-    private final ProductRepository productRepository;
     private final ClientService clientService;
-    private final TotalCalculatorService totalCalculatorService;
     private final InvoiceService invoiceService;
-
 
     @GetMapping
     public ResponseEntity<List<Invoice>> getAllInvoices() {
